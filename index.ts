@@ -190,24 +190,22 @@ export function tokenIsPresent(tokenName = AuthConfigConsts.DEFAULT_TOKEN_NAME, 
 }
 
 export const AUTH_PROVIDERS: Provider[] = [
-  {
-    provide: AuthHttp,
+  new Provider(AuthHttp, { 
     deps: [Http, RequestOptions],
     useFactory: (http: Http, options: RequestOptions) => {
       return new AuthHttp(new AuthConfig(), http, options);
-    }
-  }
+    },
+  }),
 ];
 
 export function provideAuth(config?: IAuthConfigOptional): Provider[] {
   return [
-    {
-      provide: AuthHttp,
+    new Provider(AuthHttp, {
       deps: [Http, RequestOptions],
       useFactory: (http: Http, options: RequestOptions) => {
         return new AuthHttp(new AuthConfig(config), http, options);
-      }
-    }
+      },
+    }),
   ];
 }
 
